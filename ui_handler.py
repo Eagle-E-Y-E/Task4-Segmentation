@@ -10,7 +10,7 @@ from Kmeans import kmeans_segment_image
 from Agglomerative import apply_agglomerative_clustering
 from regionGrowing import segment_image, smooth_histogram
 from scipy.signal import find_peaks
-import io
+from MeanShift import mean_shift_filter
 from Thresholding import Thresholder
 
 
@@ -139,7 +139,7 @@ class MainWindow(QMainWindow):
         elif self.mode == "region growing":
             self.apply_region_growing()
         elif self.mode == "mean shift":
-            """"""
+            self.apply_mean_shift()
 
     def apply_kmeans(self):
         if self.input_image is not None:
@@ -202,6 +202,11 @@ class MainWindow(QMainWindow):
 
             segmented_image = segment_image(img=img, peaks=peaks, tol=tol, peak_tol=2, process_as_color=process_as_color)
             display_image_Graphics_scene(self.output_img1_GV, segmented_image)
+
+    def apply_mean_shift(self):
+        if self.input_image is None: return
+        segmented_image = mean_shift_filter(self.input_image, spatial_radius=8, color_radius=16, max_level=1)
+        display_image_Graphics_scene(self.output_img1_GV, segmented_image)
 
     def update_thresholding_image(self):
         if self.thresholding_image is not None:
