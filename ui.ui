@@ -1663,22 +1663,22 @@ border-radius: 5px;
                    </property>
                    <item>
                     <property name="text">
-                     <string>iterative</string>
+                     <string>Iterative</string>
                     </property>
                    </item>
                    <item>
                     <property name="text">
-                     <string>local</string>
+                     <string>Local</string>
                     </property>
                    </item>
                    <item>
                     <property name="text">
-                     <string>otsu</string>
+                     <string>Otsu</string>
                     </property>
                    </item>
                    <item>
                     <property name="text">
-                     <string>multi-spectral</string>
+                     <string>Spectral</string>
                     </property>
                    </item>
                   </widget>
@@ -1750,7 +1750,7 @@ border-radius: 5px;
                        <number>1</number>
                       </property>
                       <property name="maximum">
-                       <number>10</number>
+                       <number>100</number>
                       </property>
                       <property name="orientation">
                        <enum>Qt::Horizontal</enum>
@@ -1795,7 +1795,7 @@ border-radius: 5px;
                        <number>1</number>
                       </property>
                       <property name="maximum">
-                       <number>10</number>
+                       <number>100</number>
                       </property>
                       <property name="orientation">
                        <enum>Qt::Horizontal</enum>
@@ -1834,7 +1834,7 @@ border-radius: 5px;
                        <number>1</number>
                       </property>
                       <property name="maximum">
-                       <number>10</number>
+                       <number>100</number>
                       </property>
                       <property name="orientation">
                        <enum>Qt::Horizontal</enum>
