@@ -11,11 +11,13 @@ from Agglomerative import apply_agglomerative_clustering
 from regionGrowing import segment_image, smooth_histogram
 from scipy.signal import find_peaks
 import io
+from Thresholding import Thresholder
 
 
 class MainWindow(QMainWindow):
     def __init__(self):
         super(MainWindow, self).__init__()
+        self.thresholder = Thresholder()
         uic.loadUi('ui.ui', self)
         self.input_image = None
 
@@ -64,15 +66,18 @@ class MainWindow(QMainWindow):
             lambda: self.num_modes_label.setText(f"{self.num_modes_slider.value()}"))
         self.smoothing_window_slider.valueChanged.connect(
             lambda: self.smoothing_window_label.setText(f"{self.smoothing_window_slider.value()}"))
-        
+
         # sliders for local
         self.block_size_slider.valueChanged.connect(
             lambda: self.block_size_label.setText(f"{self.block_size_slider.value()}"))
         self.c_slider.valueChanged.connect(
             lambda: self.c_label.setText(f"{self.c_slider.value()}"))
+        self.apply_btn_thresholding.clicked.connect(self.update_thresholding_image)
+        self.num_modes_slider.valueChanged.connect(self.update_thresholding_image)
+        self.smoothing_window_slider.valueChanged.connect(self.update_thresholding_image)
+        self.block_size_slider.valueChanged.connect(self.update_thresholding_image)
+        self.c_slider.valueChanged.connect(self.update_thresholding_image)
 
-        # self.apply_btn_thresholding
-        #self.output_img_thresholding_GV
 
     def handle_mode_change(self):
         self.mode = self.mode_combo.currentText()
@@ -94,10 +99,10 @@ class MainWindow(QMainWindow):
 
     def handle_thresholding_mode_change(self):
         self.thresholding_mode = self.thersholding_combo.currentText()
-        if self.thresholding_mode == "multi-spectral":
+        if self.thresholding_mode == "Spectral":
             self.spectral_widget.show()
             self.local_thresholding_widget.hide()
-        elif self.thresholding_mode == "local":
+        elif self.thresholding_mode == "Local":
             self.spectral_widget.hide()
             self.local_thresholding_widget.show()
         else:
@@ -182,6 +187,19 @@ class MainWindow(QMainWindow):
 
             segmented_image = segment_image(img=img, peaks=peaks, tol=tol, peak_tol=2, process_as_color=process_as_color)
             display_image_Graphics_scene(self.output_img1_GV, segmented_image)
+
+    def update_thresholding_image(self):
+        if self.thresholding_image is not None:
+            gray_image = cv2.cvtColor(self.thresholding_image, cv2.COLOR_BGR2GRAY)
+            method = self.thersholding_combo.currentText()
+            num_modes = self.num_modes_slider.value()
+            smooth_window = self.smoothing_window_slider.value()
+            block_size = self.block_size_slider.value()
+            C = self.c_slider.value()
+
+            output_image, thresholds = self.thresholder.update_output(gray_image, method, num_modes,
+                                                                      smooth_window, block_size, C)
+            display_image_Graphics_scene(self.output_img_thresholding_GV, output_image)
 
 
 if __name__ == "__main__":
