@@ -1604,6 +1604,9 @@ border-radius: 5px;
                       <property name="text">
                        <string>Local</string>
                       </property>
+                      <property name="checked">
+                       <bool>true</bool>
+                      </property>
                      </widget>
                     </item>
                     <item>
@@ -1707,7 +1710,7 @@ border-radius: 5px;
             </widget>
            </item>
            <item>
-            <widget class="QPushButton" name="apply_btn_threholding">
+            <widget class="QPushButton" name="apply_btn_thresholding">
              <property name="minimumSize">
               <size>
                <width>0</width>
