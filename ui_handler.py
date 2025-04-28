@@ -45,7 +45,7 @@ class MainWindow(QMainWindow):
         # connect buttons
         self.apply_btn.clicked.connect(self.handle_apply)
 
-        # thresholding tab_________________________
+        # thresholding tab____________________________________________________________
         self.thresholding_image = None
         self.input_img_thresholding.mouseDoubleClickEvent = lambda event: self.doubleClickHandler(
             event, self.input_img_thresholding)
@@ -63,6 +63,7 @@ class MainWindow(QMainWindow):
             lambda: self.smoothing_window_label.setText(f"{self.smoothing_window_slider.value()}"))
 
         # self.apply_btn_thresholding
+        #self.output_img_thresholding_GV
 
     def handle_mode_change(self):
         self.mode = self.mode_combo.currentText()
