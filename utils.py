@@ -74,10 +74,12 @@ def enforce_slider_step(slider, step, min_value):
         corrected_value = round((value - min_value) / step) * step + min_value
         slider.setValue(corrected_value)
 
-def show_histogram_on_label(label, data):
+def show_histogram_on_label(label, data, peaks):
     # Create the histogram with matplotlib
-    plt.figure(figsize=(4, 3))
-    plt.hist(data.ravel(), bins=256, color='gray')
+    plt.figure(figsize=(10, 4))
+    plt.plot(np.arange(len(data)), data, label="Smoothed Histogram")
+    plt.plot(peaks, data[peaks], "x", label="Peaks")
+    plt.legend()
     plt.tight_layout()
     buf = io.BytesIO()
     plt.savefig(buf, format='png')

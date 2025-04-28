@@ -1,7 +1,6 @@
 import numpy as np
 import cv2
 import matplotlib.pyplot as plt
-from scipy.signal import find_peaks
 from scipy.ndimage import gaussian_filter1d
 
 # ----------------------------
@@ -159,67 +158,17 @@ def unsupervised_region_segmentation(img, peaks, tol=15, peak_tol=2, mode='gray'
 # ----------------------------
 # Unified segmentation function
 # ----------------------------
-def segment_image(img, tol=15, peak_tol=2, prominence=10, distance=10):
+def segment_image(img, tol=15, peak_tol=2, peaks=0, process_as_color=True):
     if img is None:
         raise ValueError(f"Error: Could not read the image.")
-    
-    # Check if the image is effectively grayscale.
-    process_as_color = True
-    if len(img.shape) == 3 and img.shape[2] == 3:
-        if np.allclose(img[..., 0], img[..., 1], atol=1) and np.allclose(img[..., 0], img[..., 2], atol=1):
-            print("Detected as Grayscale image (stored in 3 channels).")
-            img = img[..., 0]
-            process_as_color = False
-        else:
-            print("Detected as Color image.")
-    elif len(img.shape) == 2:
-        print("Detected as Grayscale image.")
-        process_as_color = False
-    else:
-        raise ValueError("Unsupported image shape.")
-    
     # Perform histogram analysis and peak detection based on image type.
     if not process_as_color:
-        hist = cv2.calcHist([img], [0], None, [256], [0, 256]).flatten()
-        smoothed_hist = smooth_histogram(hist, sigma=2)
-        global_max_peak = np.argmax(smoothed_hist)
-        peaks, _ = find_peaks(smoothed_hist, prominence=prominence, distance=distance)
-        peaks = np.append(peaks, global_max_peak)
-        peaks = np.unique(peaks)
-        print("Detected grayscale peaks (intensity):", peaks)
-        # (Optional) display the histogram.
-        plt.figure(figsize=(10, 4))
-        plt.plot(smoothed_hist, label="Smoothed Histogram")
-        plt.plot(peaks, smoothed_hist[peaks], "x", label="Peaks")
-        plt.title("Grayscale Histogram")
-        plt.xlabel("Intensity")
-        plt.ylabel("Frequency")
-        plt.legend()
-        plt.show()
         seg_map = unsupervised_region_segmentation(img, peaks, tol, peak_tol, mode='gray')
+        print("finish")
         # For display purposes, normalize.
         seg_out = cv2.normalize(seg_map, None, 0, 255, cv2.NORM_MINMAX).astype(np.uint8)
         return seg_out  # for grayscale, return the normalized segmentation map.
     else:
-        # For color segmentation, perform analysis using the L-channel.
-        img_lab = cv2.cvtColor(img, cv2.COLOR_BGR2LAB)
-        L_channel = img_lab[:, :, 0]
-        hist = cv2.calcHist([L_channel], [0], None, [256], [0, 256]).flatten()
-        smoothed_hist = smooth_histogram(hist, sigma=2)
-        global_max_peak = np.argmax(smoothed_hist)
-        peaks, _ = find_peaks(smoothed_hist, prominence=prominence, distance=distance)
-        peaks = np.append(peaks, global_max_peak)
-        peaks = np.unique(peaks)
-        print("Detected peaks in L-channel:", peaks)
-        # (Optional) display the histogram.
-        plt.figure(figsize=(10, 4))
-        plt.plot(smoothed_hist, label="Smoothed L-channel Histogram")
-        plt.plot(peaks, smoothed_hist[peaks], "x", label="Peaks")
-        plt.title("L-channel Histogram")
-        plt.xlabel("Intensity")
-        plt.ylabel("Frequency")
-        plt.legend()
-        plt.show()
         seg_map = unsupervised_region_segmentation(img, peaks, tol, peak_tol, mode='color')
         # Restore original color in each region.
         seg_out = color_regions(img, seg_map)
