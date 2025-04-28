@@ -52,7 +52,7 @@ QPushButton:disabled, QToolButton:disabled, QCommandLinkButton:disabled{
     color: #616161;
     background-color: qlineargradient(spread:pad, x1:0.5, y1:0, x2:0.5, y2:1, stop:0 #dce7eb, stop:0.5 #e0e8eb, stop:1 #dee7ec);
 }
-QLineEdit, QTextEdit, QPlainTextEdit, QSpinBox, QDoubleSpinBox, QTimeEdit, QDateEdit, QDateTimeEdit {
+QLineEdit, QTextEdit, QPlainTextEdit, QDoubleSpinBox, QTimeEdit, QDateEdit, QDateTimeEdit {
     border-width: 2px;
     border-radius: 8px;
     border-style: solid;
@@ -63,7 +63,7 @@ QLineEdit, QTextEdit, QPlainTextEdit, QSpinBox, QDoubleSpinBox, QTimeEdit, QDate
     background-color: #f4f4f4;
     color: #3d3d3d;
 }
-QLineEdit:focus, QTextEdit:focus, QPlainTextEdit:focus, QSpinBox:focus, QDoubleSpinBox:focus, QTimeEdit:focus, QDateEdit:focus, QDateTimeEdit:focus {
+QLineEdit:focus, QTextEdit:focus, QPlainTextEdit:focus, QDoubleSpinBox:focus, QTimeEdit:focus, QDateEdit:focus, QDateTimeEdit:focus {
     border-width: 2px;
     border-radius: 8px;
     border-style: solid;
@@ -74,10 +74,10 @@ QLineEdit:focus, QTextEdit:focus, QPlainTextEdit:focus, QSpinBox:focus, QDoubleS
     background-color: #f4f4f4;
     color: #3d3d3d;
 }
-QLineEdit:disabled, QTextEdit:disabled, QPlainTextEdit:disabled, QSpinBox:disabled, QDoubleSpinBox:disabled, QTimeEdit:disabled, QDateEdit:disabled, QDateTimeEdit:disabled {
+QLineEdit:disabled, QTextEdit:disabled, QPlainTextEdit:disabled, QDoubleSpinBox:disabled, QTimeEdit:disabled, QDateEdit:disabled, QDateTimeEdit:disabled {
     color: #b9b9b9;
 }
-QSpinBox::up-button, QDoubleSpinBox::up-button, QTimeEdit::up-button, QDateEdit::up-button, QDateTimeEdit::up-button {
+ QTimeEdit::up-button, QDateEdit::up-button, QDateTimeEdit::up-button {
     subcontrol-origin: padding;
     subcontrol-position: top right;
     width: 15px;
@@ -88,7 +88,7 @@ QSpinBox::up-button, QDoubleSpinBox::up-button, QTimeEdit::up-button, QDateEdit:
     border-top-right-radius: 3px;
     padding: 3px;
 }
-QSpinBox::down-button, QDoubleSpinBox::down-button, QTimeEdit::down-button, QDateEdit::down-button, QDateTimeEdit::down-button {
+ QTimeEdit::down-button, QDateEdit::down-button, QDateTimeEdit::down-button {
     subcontrol-origin: padding;
     subcontrol-position: bottom right;
     width: 15px;
@@ -99,29 +99,29 @@ QSpinBox::down-button, QDoubleSpinBox::down-button, QTimeEdit::down-button, QDat
     border-bottom-right-radius: 3px;
     padding: 3px;
 }
-QSpinBox::up-button:pressed, QDoubleSpinBox::up-button:pressed, QTimeEdit::up-button:pressed, QDateEdit::up-button:pressed, QDateTimeEdit::up-button:pressed {
+ QTimeEdit::up-button:pressed, QDateEdit::up-button:pressed, QDateTimeEdit::up-button:pressed {
     color: #aeaeae;
     background-color: qlineargradient(spread:pad, x1:0.5, y1:0, x2:0.5, y2:1, stop:0 #ffffff, stop:0.5 #fbfdfd, stop:1 #ffffff);
 }
-QSpinBox::down-button:pressed, QDoubleSpinBox::down-button:pressed, QTimeEdit::down-button:pressed, QDateEdit::down-button:pressed, QDateTimeEdit::down-button:pressed {
+ QTimeEdit::down-button:pressed, QDateEdit::down-button:pressed, QDateTimeEdit::down-button:pressed {
     color: #aeaeae;
     background-color: qlineargradient(spread:pad, x1:0.5, y1:0, x2:0.5, y2:1, stop:0 #ffffff, stop:0.5 #fbfdfd, stop:1 #ffffff);
 }
-QSpinBox::up-button:hover, QDoubleSpinBox::up-button:hover, QTimeEdit::up-button:hover, QDateEdit::up-button:hover, QDateTimeEdit::up-button:hover {
+QTimeEdit::up-button:hover, QDateEdit::up-button:hover, QDateTimeEdit::up-button:hover {
     color: #FFFFFF;
     border-top-right-radius: 5px;
     background-color: qlineargradient(spread:pad, x1:0.5, y1:0, x2:0.5, y2:1, stop:0 #84afe5, stop:1 #1168e4);
     
 }
-QSpinBox::down-button:hover, QDoubleSpinBox::down-button:hover, QTimeEdit::down-button:hover, QDateEdit::down-button:hover, QDateTimeEdit::down-button:hover {
+ QTimeEdit::down-button:hover, QDateEdit::down-button:hover, QDateTimeEdit::down-button:hover {
     color: #FFFFFF;
     border-bottom-right-radius: 5px;
     background-color: qlineargradient(spread:pad, x1:0.5, y1:0, x2:0.5, y2:1, stop:0 #84afe5, stop:1 #1168e4);
 }
-QSpinBox::up-arrow, QDoubleSpinBox::up-arrow, QTimeEdit::up-arrow, QDateEdit::up-arrow, QDateTimeEdit::up-arrow {
+ QTimeEdit::up-arrow, QDateEdit::up-arrow, QDateTimeEdit::up-arrow {
     image: url(/usr/share/icons/Adwaita/16x16/actions/go-up-symbolic.symbolic.png);
 }
-QSpinBox::down-arrow, QDoubleSpinBox::down-arrow, QTimeEdit::down-arrow, QDateEdit::down-arrow, QDateTimeEdit::down-arrow {
+ QTimeEdit::down-arrow, QDateEdit::down-arrow, QDateTimeEdit::down-arrow {
     image: url(/usr/share/icons/Adwaita/16x16/actions/go-down-symbolic.symbolic.png);
 }
 QProgressBar {
@@ -464,6 +464,11 @@ border-radius: 5px;
                      <string>agglomerative</string>
                     </property>
                    </item>
+                   <item>
+                    <property name="text">
+                     <string>region growing</string>
+                    </property>
+                   </item>
                   </widget>
                  </item>
                 </layout>
@@ -634,6 +639,75 @@ border-radius: 5px;
                      <widget class="QLabel" name="agg_num_clusters_label">
                       <property name="text">
                        <string>1</string>
+                      </property>
+                     </widget>
+                    </item>
+                   </layout>
+                  </widget>
+                 </item>
+                </layout>
+               </widget>
+              </item>
+              <item>
+               <widget class="QWidget" name="agglomerative_widget_2" native="true">
+                <layout class="QVBoxLayout" name="verticalLayout_6">
+                 <item>
+                  <widget class="QFrame" name="frame_25">
+                   <property name="frameShape">
+                    <enum>QFrame::StyledPanel</enum>
+                   </property>
+                   <property name="frameShadow">
+                    <enum>QFrame::Raised</enum>
+                   </property>
+                   <layout class="QHBoxLayout" name="horizontalLayout_16">
+                    <item>
+                     <widget class="QLabel" name="label_13">
+                      <property name="text">
+                       <string>prominence</string>
+                      </property>
+                     </widget>
+                    </item>
+                    <item>
+                     <widget class="QSpinBox" name="prominence_spinbox">
+                      <property name="styleSheet">
+                       <string notr="true">background-color: rgb(82, 85, 91);
+background-color: rgb(33, 30, 48);</string>
+                      </property>
+                      <property name="minimum">
+                       <number>10</number>
+                      </property>
+                      <property name="maximum">
+                       <number>100</number>
+                      </property>
+                      <property name="singleStep">
+                       <number>10</number>
+                      </property>
+                     </widget>
+                    </item>
+                   </layout>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QFrame" name="frame_27">
+                   <property name="frameShape">
+                    <enum>QFrame::StyledPanel</enum>
+                   </property>
+                   <property name="frameShadow">
+                    <enum>QFrame::Raised</enum>
+                   </property>
+                   <layout class="QHBoxLayout" name="horizontalLayout_18">
+                    <item>
+                     <widget class="QLabel" name="label_15">
+                      <property name="text">
+                       <string>distance</string>
+                      </property>
+                     </widget>
+                    </item>
+                    <item>
+                     <widget class="QSpinBox" name="distance_spinbox">
+                      <property name="styleSheet">
+                       <string notr="true">background-color: rgb(82, 85, 91);
+background-color: rgb(33, 30, 48);</string>
                       </property>
                      </widget>
                     </item>
