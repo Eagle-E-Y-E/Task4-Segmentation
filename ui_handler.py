@@ -61,6 +61,12 @@ class MainWindow(QMainWindow):
             lambda: self.num_modes_label.setText(f"{self.num_modes_slider.value()}"))
         self.smoothing_window_slider.valueChanged.connect(
             lambda: self.smoothing_window_label.setText(f"{self.smoothing_window_slider.value()}"))
+        
+        # sliders for local
+        self.block_size_slider.valueChanged.connect(
+            lambda: self.block_size_label.setText(f"{self.block_size_slider.value()}"))
+        self.c_slider.valueChanged.connect(
+            lambda: self.c_label.setText(f"{self.c_slider.value()}"))
 
         # self.apply_btn_thresholding
         #self.output_img_thresholding_GV
@@ -87,8 +93,13 @@ class MainWindow(QMainWindow):
         self.thresholding_mode = self.thersholding_combo.currentText()
         if self.thresholding_mode == "multi-spectral":
             self.spectral_widget.show()
+            self.local_thresholding_widget.hide()
+        elif self.thresholding_mode == "local":
+            self.spectral_widget.hide()
+            self.local_thresholding_widget.show()
         else:
             self.spectral_widget.hide()
+            self.local_thresholding_widget.hide()
 
     def doubleClickHandler(self, event, widget):
         self.img_path = load_pixmap_to_label(widget)
