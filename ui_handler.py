@@ -95,7 +95,7 @@ class MainWindow(QMainWindow):
             tol = self.region_growing_threshold_slider.value()
             prominence = self.prominence_spinbox.value()
             distance = self.distance_spinbox.value()
-            segmented_image = segment_image(self.input_image, prominence=prominence, distance=distance, tol=tol, mode='color')
+            segmented_image = segment_image(self.input_image, prominence=prominence, distance=distance, tol=tol, peak_tol=2)
             display_image_Graphics_scene(self.output_img1_GV, segmented_image)
 
 
