@@ -390,7 +390,7 @@ QScrollBar::right-arrow:horizontal {
        <string notr="true">color: rgb(255, 255, 255);</string>
       </property>
       <property name="currentIndex">
-       <number>1</number>
+       <number>0</number>
       </property>
       <widget class="QWidget" name="tab">
        <attribute name="title">
@@ -586,10 +586,10 @@ border-radius: 5px;
                     <item>
                      <widget class="QSlider" name="init_num_clusters_slider">
                       <property name="minimum">
-                       <number>1</number>
+                       <number>2</number>
                       </property>
                       <property name="maximum">
-                       <number>10</number>
+                       <number>50</number>
                       </property>
                       <property name="orientation">
                        <enum>Qt::Horizontal</enum>
@@ -599,7 +599,7 @@ border-radius: 5px;
                     <item>
                      <widget class="QLabel" name="init_num_clusters_label">
                       <property name="text">
-                       <string>1</string>
+                       <string>2</string>
                       </property>
                      </widget>
                     </item>
@@ -625,10 +625,10 @@ border-radius: 5px;
                     <item>
                      <widget class="QSlider" name="agg_num_clusters_slider">
                       <property name="minimum">
-                       <number>1</number>
+                       <number>2</number>
                       </property>
                       <property name="maximum">
-                       <number>10</number>
+                       <number>50</number>
                       </property>
                       <property name="orientation">
                        <enum>Qt::Horizontal</enum>
@@ -638,7 +638,7 @@ border-radius: 5px;
                     <item>
                      <widget class="QLabel" name="agg_num_clusters_label">
                       <property name="text">
-                       <string>1</string>
+                       <string>2</string>
                       </property>
                      </widget>
                     </item>
@@ -708,6 +708,9 @@ background-color: rgb(33, 30, 48);</string>
                       <property name="styleSheet">
                        <string notr="true">background-color: rgb(82, 85, 91);
 background-color: rgb(33, 30, 48);</string>
+                      </property>
+                      <property name="maximum">
+                       <number>300</number>
                       </property>
                      </widget>
                     </item>
