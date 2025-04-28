@@ -142,7 +142,45 @@ class MainWindow(QMainWindow):
             tol = self.region_growing_threshold_slider.value()
             prominence = self.prominence_spinbox.value()
             distance = self.distance_spinbox.value()
-            segmented_image = segment_image(self.input_image, prominence=prominence, distance=distance, tol=tol, peak_tol=2)
+            img = self.input_image.copy()
+            process_as_color = True
+            if len(img.shape) == 3 and img.shape[2] == 3:
+                if np.allclose(img[..., 0], img[..., 1], atol=1) and np.allclose(img[..., 0], img[..., 2], atol=1):
+                    print("Detected as Grayscale image (stored in 3 channels).")
+                    img = img[..., 0]
+                    process_as_color = False
+                else:
+                    print("Detected as Color image.")
+            elif len(img.shape) == 2:
+                print("Detected as Grayscale image.")
+                process_as_color = False
+            else:
+                raise ValueError("Unsupported image shape.")
+            
+            if not process_as_color:
+                hist = cv2.calcHist([img], [0], None, [256], [0, 256]).flatten()
+                smoothed_hist = smooth_histogram(hist, sigma=2)
+                global_max_peak = np.argmax(smoothed_hist)
+                peaks, _ = find_peaks(smoothed_hist, prominence=prominence, distance=distance)
+                peaks = np.append(peaks, global_max_peak)
+                peaks = np.unique(peaks)
+                print("Detected grayscale peaks (intensity):", peaks)
+                show_histogram_on_label(self.histogram_label, smoothed_hist, peaks=peaks)
+
+            else:
+                # For color segmentation, perform analysis using the L-channel.
+                img_lab = cv2.cvtColor(img, cv2.COLOR_BGR2LAB)
+                L_channel = img_lab[:, :, 0]
+                hist = cv2.calcHist([L_channel], [0], None, [256], [0, 256]).flatten()
+                smoothed_hist = smooth_histogram(hist, sigma=2)
+                global_max_peak = np.argmax(smoothed_hist)
+                peaks, _ = find_peaks(smoothed_hist, prominence=prominence, distance=distance)
+                peaks = np.append(peaks, global_max_peak)
+                peaks = np.unique(peaks)
+                print("Detected peaks in L-channel:", peaks)
+                show_histogram_on_label(self.histogram_label, smoothed_hist, peaks=peaks)
+
+            segmented_image = segment_image(img=img, peaks=peaks, tol=tol, peak_tol=2, process_as_color=process_as_color)
             display_image_Graphics_scene(self.output_img1_GV, segmented_image)
 
 
