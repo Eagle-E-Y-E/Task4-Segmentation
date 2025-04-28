@@ -5,6 +5,8 @@ from PyQt5.QtCore import Qt
 import cv2
 from utils import load_pixmap_to_label, display_image_Graphics_scene, enforce_slider_step
 from Kmeans import kmeans_segment_image
+from Agglomerative import apply_agglomerative_clustering
+from regionGrowing import segment_image
 
 
 class MainWindow(QMainWindow):
@@ -69,9 +71,9 @@ class MainWindow(QMainWindow):
         if self.mode == "K-means":
             self.apply_kmeans()
         elif self.mode == "agglomerative":
-            """"""
+            self.apply_agglomerative()
         elif self.mode == "region growing":
-            """"""
+            self.apply_region_growing()
         elif self.mode == "mean shift":
             """"""
     def apply_kmeans(self):
@@ -79,6 +81,21 @@ class MainWindow(QMainWindow):
             num_clusters = self.num_clusters_slider.value()
             max_iterations = self.max_iterations_slider.value()
             segmented_image = kmeans_segment_image(self.input_image, k=num_clusters, max_iters=max_iterations)
+            display_image_Graphics_scene(self.output_img1_GV, segmented_image)
+
+    def apply_agglomerative(self):
+        if self.input_image is not None:
+            initial_num_clusters = self.init_num_clusters_slider.value()
+            num_clusters = self.agg_num_clusters_slider.value()
+            segmented_image = apply_agglomerative_clustering(self.input_image, number_of_clusters=num_clusters, initial_number_of_clusters=initial_num_clusters)
+            display_image_Graphics_scene(self.output_img1_GV, segmented_image)
+    
+    def apply_region_growing(self):
+        if self.input_image is not None:
+            tol = self.region_growing_threshold_slider.value()
+            prominence = self.prominence_spinbox.value()
+            distance = self.distance_spinbox.value()
+            segmented_image = segment_image(self.input_image, tol=tol, mode='color')
             display_image_Graphics_scene(self.output_img1_GV, segmented_image)
 
 
