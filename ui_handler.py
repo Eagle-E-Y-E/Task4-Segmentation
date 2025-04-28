@@ -29,6 +29,14 @@ class MainWindow(QMainWindow):
 
         self.mode_combo.currentTextChanged.connect(self.handle_mode_change)
         self.handle_mode_change()
+        
+
+        ## region growing_______________________________
+        # sliders for region growing
+        self.region_growing_threshold_slider.valueChanged.connect(
+            lambda: self.region_growing_threshold_label.setText(f"{self.region_growing_threshold_slider.value()}"))
+        #prominence_spinbox
+        #distance_spinbox
 
         # connect buttons
         self.apply_btn.clicked.connect(self.handle_apply)
@@ -36,12 +44,20 @@ class MainWindow(QMainWindow):
     def handle_mode_change(self):
         self.mode = self.mode_combo.currentText()
         if self.mode == "agglomerative":
-            # hide the K-means widget
             self.agglomerative_widget.show()
             self.kmeans_widget.hide()
+            self.region_growing_widget.hide()
+            self.region_growing_hist_widget.hide()
         elif self.mode == "K-means":
             self.agglomerative_widget.hide()
             self.kmeans_widget.show()
+            self.region_growing_widget.hide()
+            self.region_growing_hist_widget.hide()
+        elif self.mode == "region growing":
+            self.agglomerative_widget.hide()
+            self.kmeans_widget.hide()
+            self.region_growing_widget.show()
+            self.region_growing_hist_widget.show()
 
 
     def doubleClickHandler(self, event, widget):
