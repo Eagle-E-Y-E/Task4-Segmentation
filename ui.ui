@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>999</width>
-    <height>830</height>
+    <width>1024</width>
+    <height>851</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -469,6 +469,11 @@ border-radius: 5px;
                      <string>region growing</string>
                     </property>
                    </item>
+                   <item>
+                    <property name="text">
+                     <string>mean shift</string>
+                    </property>
+                   </item>
                   </widget>
                  </item>
                 </layout>
@@ -674,7 +679,7 @@ border-radius: 5px;
 background-color: rgb(33, 30, 48);</string>
                       </property>
                       <property name="minimum">
-                       <number>10</number>
+                       <number>0</number>
                       </property>
                       <property name="maximum">
                        <number>100</number>
@@ -750,6 +755,99 @@ background-color: rgb(33, 30, 48);</string>
                      <widget class="QLabel" name="region_growing_threshold_label">
                       <property name="text">
                        <string>1</string>
+                      </property>
+                     </widget>
+                    </item>
+                   </layout>
+                  </widget>
+                 </item>
+                </layout>
+               </widget>
+              </item>
+              <item>
+               <widget class="QWidget" name="mean_shift_widget" native="true">
+                <layout class="QVBoxLayout" name="verticalLayout_13">
+                 <item>
+                  <widget class="QLabel" name="label_10">
+                   <property name="text">
+                    <string>spatial radius</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QFrame" name="frame_28">
+                   <property name="frameShape">
+                    <enum>QFrame::StyledPanel</enum>
+                   </property>
+                   <property name="frameShadow">
+                    <enum>QFrame::Raised</enum>
+                   </property>
+                   <layout class="QHBoxLayout" name="horizontalLayout_19">
+                    <item>
+                     <widget class="QSlider" name="spatial_radius_slider">
+                      <property name="minimum">
+                       <number>5</number>
+                      </property>
+                      <property name="maximum">
+                       <number>20</number>
+                      </property>
+                      <property name="value">
+                       <number>8</number>
+                      </property>
+                      <property name="orientation">
+                       <enum>Qt::Horizontal</enum>
+                      </property>
+                     </widget>
+                    </item>
+                    <item>
+                     <widget class="QLabel" name="spatial_radius_label">
+                      <property name="text">
+                       <string>8</string>
+                      </property>
+                     </widget>
+                    </item>
+                   </layout>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QLabel" name="label_11">
+                   <property name="text">
+                    <string>color radius</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QFrame" name="frame_29">
+                   <property name="frameShape">
+                    <enum>QFrame::StyledPanel</enum>
+                   </property>
+                   <property name="frameShadow">
+                    <enum>QFrame::Raised</enum>
+                   </property>
+                   <layout class="QHBoxLayout" name="horizontalLayout_20">
+                    <item>
+                     <widget class="QSlider" name="color_radius_slider">
+                      <property name="minimum">
+                       <number>5</number>
+                      </property>
+                      <property name="maximum">
+                       <number>50</number>
+                      </property>
+                      <property name="value">
+                       <number>16</number>
+                      </property>
+                      <property name="sliderPosition">
+                       <number>16</number>
+                      </property>
+                      <property name="orientation">
+                       <enum>Qt::Horizontal</enum>
+                      </property>
+                     </widget>
+                    </item>
+                    <item>
+                     <widget class="QLabel" name="color_radius_label">
+                      <property name="text">
+                       <string>16</string>
                       </property>
                      </widget>
                     </item>
@@ -2464,7 +2562,7 @@ QGroupBox::title {
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>999</width>
+     <width>1024</width>
      <height>17</height>
     </rect>
    </property>

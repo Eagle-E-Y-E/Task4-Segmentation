@@ -32,6 +32,12 @@ class MainWindow(QMainWindow):
             lambda: self.init_num_clusters_label.setText(f"{self.init_num_clusters_slider.value()}"))
         self.agg_num_clusters_slider.valueChanged.connect(
             lambda: self.agg_num_clusters_label.setText(f"{self.agg_num_clusters_slider.value()}"))
+        # sliders for mean shift
+        self.color_radius_slider.valueChanged.connect(
+            lambda: self.color_radius_label.setText(f"{self.color_radius_slider.value()}"))
+        self.spatial_radius_slider.valueChanged.connect(
+            lambda: self.spatial_radius_label.setText(f"{self.spatial_radius_slider.value()}"))
+        
 
         self.mode_combo.currentTextChanged.connect(self.handle_mode_change)
         self.handle_mode_change()
@@ -81,16 +87,25 @@ class MainWindow(QMainWindow):
             self.kmeans_widget.hide()
             self.region_growing_widget.hide()
             self.region_growing_hist_widget.hide()
+            self.mean_shift_widget.hide()
         elif self.mode == "K-means":
             self.agglomerative_widget.hide()
             self.kmeans_widget.show()
             self.region_growing_widget.hide()
             self.region_growing_hist_widget.hide()
+            self.mean_shift_widget.hide()
         elif self.mode == "region growing":
             self.agglomerative_widget.hide()
             self.kmeans_widget.hide()
             self.region_growing_widget.show()
             self.region_growing_hist_widget.show()
+            self.mean_shift_widget.hide()
+        elif self.mode == "mean shift":
+            self.agglomerative_widget.hide()
+            self.kmeans_widget.hide()
+            self.region_growing_widget.hide()
+            self.region_growing_hist_widget.hide()
+            self.mean_shift_widget.show()
 
     def handle_thresholding_mode_change(self):
         self.thresholding_mode = self.thersholding_combo.currentText()
