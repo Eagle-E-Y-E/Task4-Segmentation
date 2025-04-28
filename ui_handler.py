@@ -3,10 +3,11 @@ from PyQt5 import uic
 from PyQt5.QtWidgets import QApplication, QMainWindow
 from PyQt5.QtCore import Qt
 import cv2
-from utils import load_pixmap_to_label, display_image_Graphics_scene, enforce_slider_step
+from utils import load_pixmap_to_label, display_image_Graphics_scene, enforce_slider_step, show_histogram_on_label
 from Kmeans import kmeans_segment_image
 from Agglomerative import apply_agglomerative_clustering
 from regionGrowing import segment_image
+import io
 
 
 class MainWindow(QMainWindow):
@@ -40,8 +41,11 @@ class MainWindow(QMainWindow):
         #prominence_spinbox
         #distance_spinbox
 
+        ##  how_histogram_on_label(self.histogram_label, self.input_image)
+
         # connect buttons
         self.apply_btn.clicked.connect(self.handle_apply)
+        
 
     def handle_mode_change(self):
         self.mode = self.mode_combo.currentText()
@@ -66,6 +70,7 @@ class MainWindow(QMainWindow):
         self.img_path = load_pixmap_to_label(widget)
         if widget == self.input_img1:
             self.input_image = cv2.imread(self.img_path)
+            s
     
     def handle_apply(self):
         if self.mode == "K-means":

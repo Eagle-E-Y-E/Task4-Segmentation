@@ -11,6 +11,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 from PyQt5.QtWidgets import QDialog, QLabel, QVBoxLayout
 from PyQt5.QtCore import QTimer
+import io
 
 
 def load_pixmap_to_label(label: QLabel):
@@ -72,3 +73,18 @@ def enforce_slider_step(slider, step, min_value):
     if (value - min_value) % step != 0:
         corrected_value = round((value - min_value) / step) * step + min_value
         slider.setValue(corrected_value)
+
+def show_histogram_on_label(label, data):
+    # Create the histogram with matplotlib
+    plt.figure(figsize=(4, 3))
+    plt.hist(data.ravel(), bins=256, color='gray')
+    plt.tight_layout()
+    buf = io.BytesIO()
+    plt.savefig(buf, format='png')
+    plt.close()
+    buf.seek(0)
+    # Convert to QPixmap
+    qimg = QImage.fromData(buf.getvalue())
+    pixmap = QPixmap.fromImage(qimg)
+    label.setPixmap(pixmap)
+    label.setAlignment(Qt.AlignCenter)
