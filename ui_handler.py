@@ -32,20 +32,37 @@ class MainWindow(QMainWindow):
 
         self.mode_combo.currentTextChanged.connect(self.handle_mode_change)
         self.handle_mode_change()
-        
 
-        ## region growing_______________________________
+        # region growing_______________________________
         # sliders for region growing
         self.region_growing_threshold_slider.valueChanged.connect(
             lambda: self.region_growing_threshold_label.setText(f"{self.region_growing_threshold_slider.value()}"))
-        #prominence_spinbox
-        #distance_spinbox
+        # prominence_spinbox
+        # distance_spinbox
 
-        ##  how_histogram_on_label(self.histogram_label, self.input_image)
+        # how_histogram_on_label(self.histogram_label, self.input_image)
 
         # connect buttons
         self.apply_btn.clicked.connect(self.handle_apply)
-        
+
+        # thresholding tab_________________________
+        self.thresholding_image = None
+        self.input_img_thresholding.mouseDoubleClickEvent = lambda event: self.doubleClickHandler(
+            event, self.input_img_thresholding)
+        self.thersholding_combo.currentTextChanged.connect(
+            self.handle_thresholding_mode_change)
+        self.handle_thresholding_mode_change()
+        # radio btns
+        # self.global_radio
+        # self.local_radio
+
+        # sliders for spectral
+        self.num_modes_slider.valueChanged.connect(
+            lambda: self.num_modes_label.setText(f"{self.num_modes_slider.value()}"))
+        self.smoothing_window_slider.valueChanged.connect(
+            lambda: self.smoothing_window_label.setText(f"{self.smoothing_window_slider.value()}"))
+
+        # self.apply_btn_thresholding
 
     def handle_mode_change(self):
         self.mode = self.mode_combo.currentText()
@@ -65,13 +82,20 @@ class MainWindow(QMainWindow):
             self.region_growing_widget.show()
             self.region_growing_hist_widget.show()
 
+    def handle_thresholding_mode_change(self):
+        self.thresholding_mode = self.thersholding_combo.currentText()
+        if self.thresholding_mode == "multi-spectral":
+            self.spectral_widget.show()
+        else:
+            self.spectral_widget.hide()
 
     def doubleClickHandler(self, event, widget):
         self.img_path = load_pixmap_to_label(widget)
         if widget == self.input_img1:
             self.input_image = cv2.imread(self.img_path)
-            s
-    
+        if widget == self.input_img_thresholding:
+            self.thresholding_image = cv2.imread(self.img_path)
+
     def handle_apply(self):
         if self.mode == "K-means":
             self.apply_kmeans()
@@ -81,26 +105,30 @@ class MainWindow(QMainWindow):
             self.apply_region_growing()
         elif self.mode == "mean shift":
             """"""
+
     def apply_kmeans(self):
         if self.input_image is not None:
             num_clusters = self.num_clusters_slider.value()
             max_iterations = self.max_iterations_slider.value()
-            segmented_image = kmeans_segment_image(self.input_image, k=num_clusters, max_iters=max_iterations)
+            segmented_image = kmeans_segment_image(
+                self.input_image, k=num_clusters, max_iters=max_iterations)
             display_image_Graphics_scene(self.output_img1_GV, segmented_image)
 
     def apply_agglomerative(self):
         if self.input_image is not None:
             initial_num_clusters = self.init_num_clusters_slider.value()
             num_clusters = self.agg_num_clusters_slider.value()
-            segmented_image = apply_agglomerative_clustering(self.input_image, number_of_clusters=num_clusters, initial_number_of_clusters=initial_num_clusters)
+            segmented_image = apply_agglomerative_clustering(
+                self.input_image, number_of_clusters=num_clusters, initial_number_of_clusters=initial_num_clusters)
             display_image_Graphics_scene(self.output_img1_GV, segmented_image)
-    
+
     def apply_region_growing(self):
         if self.input_image is not None:
             tol = self.region_growing_threshold_slider.value()
             prominence = self.prominence_spinbox.value()
             distance = self.distance_spinbox.value()
-            segmented_image = segment_image(self.input_image, prominence=prominence, distance=distance, tol=tol, peak_tol=2)
+            segmented_image = segment_image(
+                self.input_image, prominence=prominence, distance=distance, tol=tol, peak_tol=2)
             display_image_Graphics_scene(self.output_img1_GV, segmented_image)
 
 
