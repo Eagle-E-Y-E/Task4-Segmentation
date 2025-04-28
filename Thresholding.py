@@ -131,7 +131,7 @@ class Thresholder:
 
 # Main script
 
-# # image = cv2.imread('Data/Thresholding/chainsaw.png', cv2.IMREAD_GRAYSCALE)
+# # image = cv2.imread('Data/Thresholding/Chainsaw_Local.png', cv2.IMREAD_GRAYSCALE)
 # sp = Thresholder()
 #
 # output_image, thresholds = sp.local_thresholding(image)
