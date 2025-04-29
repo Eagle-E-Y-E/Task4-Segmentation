@@ -210,7 +210,9 @@ class MainWindow(QMainWindow):
 
     def apply_mean_shift(self):
         if self.input_image is None: return
-        segmented_image = mean_shift_filter(self.input_image, spatial_radius=8, color_radius=16, max_level=1)
+        spatial_radius = self.spatial_radius_slider.value()
+        color_radius = self.color_radius_slider.value()
+        segmented_image = mean_shift_filter(self.input_image, spatial_radius=spatial_radius, color_radius=color_radius, max_iter=4)
         display_image_Graphics_scene(self.output_img1_GV, segmented_image)
 
     def update_thresholding_image(self):
