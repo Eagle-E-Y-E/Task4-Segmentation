@@ -89,7 +89,7 @@ class MainWindow(QMainWindow):
         self.mode = self.mode_combo.currentText()
         # clear output
         clear_graphics_view(self.output_img1_GV)
-        clear_graphics_view(self.output_img_thresholding_GV)
+        
         # clear histogram
         self.histogram_label.clear()
         if self.mode == "agglomerative":
@@ -119,6 +119,7 @@ class MainWindow(QMainWindow):
 
     def handle_thresholding_mode_change(self):
         self.thresholding_mode = self.thersholding_combo.currentText()
+        clear_graphics_view(self.output_img_thresholding_GV)
         if self.thresholding_mode == "Spectral":
             self.spectral_widget.show()
             self.local_thresholding_widget.hide()
