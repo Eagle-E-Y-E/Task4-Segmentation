@@ -87,7 +87,11 @@ class MainWindow(QMainWindow):
 
     def handle_mode_change(self):
         self.mode = self.mode_combo.currentText()
-        
+        # clear output
+        self.output_img1_GV.clear()
+        self.output_img_thresholding_GV.clear()
+        # clear histogram
+        self.histogram_label.clear()
         if self.mode == "agglomerative":
             self.agglomerative_widget.show()
             self.kmeans_widget.hide()
