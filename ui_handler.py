@@ -87,6 +87,7 @@ class MainWindow(QMainWindow):
 
     def handle_mode_change(self):
         self.mode = self.mode_combo.currentText()
+        
         if self.mode == "agglomerative":
             self.agglomerative_widget.show()
             self.kmeans_widget.hide()

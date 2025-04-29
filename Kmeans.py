@@ -9,11 +9,13 @@ def initialize_centroids(X, k):
     return centroids
 
 def assign_clusters(X, centroids):
-    distances = np.linalg.norm(X[:, np.newaxis] - centroids, axis=2)
+    point_to_centroid_diffs = X[:, None] - centroids # compute difference between each pnt and each centroid
+    distances = np.sqrt(np.sum(point_to_centroid_diffs ** 2, axis=2)) 
     cluster_labels = np.argmin(distances, axis=1) # assign to nearest centroid
     return cluster_labels
 
 def update_centroids(X, cluster_labels, k):
+    """move centroids to the mean of their assigned points"""
     new_centroids = []
     for i in range(k):
         points = X[cluster_labels == i]
@@ -25,11 +27,11 @@ def update_centroids(X, cluster_labels, k):
     return np.array(new_centroids)
 
 def kmeans(X, k, max_iters=100):
-    centroids = initialize_centroids(X, k)
-    for i in range(max_iters):
+    centroids = initialize_centroids(X, k) # random
+    for _ in range(max_iters):
         old_centroids = centroids.copy()
         
-        cluster_labels = assign_clusters(X, centroids)
+        cluster_labels = assign_clusters(X, centroids) 
         centroids = update_centroids(X, cluster_labels, k)
         
         # Check for convergence
