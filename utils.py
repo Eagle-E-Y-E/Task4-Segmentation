@@ -37,6 +37,12 @@ def display_image_Graphics_scene(view, image):
     view.setScene(scene)
     view.fitInView(
         scene.itemsBoundingRect(), Qt.KeepAspectRatio)
+    
+def clear_graphics_view(view):
+    scene = view.scene()
+    if scene:
+        scene.clear()
+
 
 
 def convert_cv_to_pixmap(cv_img):

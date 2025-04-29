@@ -5,7 +5,7 @@ import numpy as np
 from PyQt5.QtWidgets import QApplication, QMainWindow
 from PyQt5.QtCore import Qt
 import cv2
-from utils import load_pixmap_to_label, display_image_Graphics_scene, enforce_slider_step, show_histogram_on_label
+from utils import load_pixmap_to_label, display_image_Graphics_scene, enforce_slider_step, show_histogram_on_label, clear_graphics_view
 from Kmeans import kmeans_segment_image
 from Agglomerative import apply_agglomerative_clustering
 from regionGrowing import segment_image, smooth_histogram
@@ -88,8 +88,8 @@ class MainWindow(QMainWindow):
     def handle_mode_change(self):
         self.mode = self.mode_combo.currentText()
         # clear output
-        self.output_img1_GV.clear()
-        self.output_img_thresholding_GV.clear()
+        clear_graphics_view(self.output_img1_GV)
+        clear_graphics_view(self.output_img_thresholding_GV)
         # clear histogram
         self.histogram_label.clear()
         if self.mode == "agglomerative":
